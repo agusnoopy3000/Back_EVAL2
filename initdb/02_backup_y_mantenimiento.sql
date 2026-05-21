@@ -1,3 +1,6 @@
+-- Forzar UTF-8 para evitar doble codificacion al cargar el script
+SET NAMES utf8mb4;
+
 -- =====================================================
 -- SCRIPTS DE BACKUP Y MANTENIMIENTO
 -- Proyecto: Sistema de Gestión de Usuarios
