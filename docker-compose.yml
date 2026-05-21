@@ -3,6 +3,10 @@ services:
     image: mysql:8.0
     container_name: eval2-mysql
     restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --init-connect=SET NAMES utf8mb4
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
