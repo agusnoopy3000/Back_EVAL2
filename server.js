@@ -34,8 +34,9 @@ dbConnection.connect((err) => {
 // Ruta de prueba para verificar que el servidor funciona
 app.get('/', (req, res) => {
     res.json({ 
-        message: 'API del proyecto funcionando correctamente',
+        message: 'API Innovatech Chile - Backend desplegado vía CI/CD',
         status: 'active',
+        version: '1.1.0',
         timestamp: new Date().toISOString()
     });
 });
