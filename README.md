@@ -98,3 +98,8 @@ backend/
 - Asegúrate de tener MySQL instalado y corriendo antes de iniciar el backend
 - La base de datos `proyecto_db` debe existir (ver proyecto `database/`)
 - El servidor se reiniciará automáticamente en modo desarrollo si usas `npm run dev`
+
+
+## Despliegue DevOps (EFT)
+
+CI/CD con GitHub Actions + despliegue en AWS ECS Fargate. Ver [ARQUITECTURA.md](ARQUITECTURA.md) para el detalle de contenerización, pipeline, infraestructura y diagrama.

@@ -12,31 +12,44 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Configuración de la conexión a la base de datos MySQL
-const dbConnection = mysql.createConnection({
+// Pool de conexiones a MySQL: reconecta automáticamente y tolera reinicios de la BD
+// (más robusto que una conexión única, evita el estado "connection closed").
+const dbConnection = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'proyecto_db',
-    port: process.env.DB_PORT || 3306
+    port: process.env.DB_PORT || 3306,
+    charset: 'utf8mb4',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-// Conectar a la base de datos
-dbConnection.connect((err) => {
-    if (err) {
-        console.error('Error conectando a la base de datos:', err);
-        return;
-    }
-    console.log('Conectado exitosamente a la base de datos MySQL');
-});
+// Verifica la conectividad inicial (solo al ejecutar el servidor, no en pruebas)
+if (require.main === module) {
+    dbConnection.getConnection((err, conn) => {
+        if (err) {
+            console.error('Error conectando a la base de datos:', err.message);
+            return;
+        }
+        console.log('Conectado exitosamente a la base de datos MySQL');
+        conn.release();
+    });
+}
 
 // Ruta de prueba para verificar que el servidor funciona
 app.get('/', (req, res) => {
-    res.json({ 
+    res.json({
         message: 'API del proyecto funcionando correctamente',
         status: 'active',
         timestamp: new Date().toISOString()
     });
+});
+
+// Endpoint de salud para healthchecks y monitoreo (no depende de la base de datos)
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok', uptime: process.uptime() });
 });
 
 // Rutas para usuarios
@@ -142,11 +155,13 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Error interno del servidor' });
 });
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor backend corriendo en el puerto ${PORT}`);
-    console.log(`API disponible en: http://localhost:${PORT}`);
-});
+// Iniciar el servidor solo cuando se ejecuta directamente (no al importarlo en pruebas)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Servidor backend corriendo en el puerto ${PORT}`);
+        console.log(`API disponible en: http://localhost:${PORT}`);
+    });
+}
 
 // Exportar la app para pruebas
 module.exports = app;

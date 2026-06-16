@@ -1,0 +1,19 @@
+# Control de versiones
+.git
+.gitignore
+
+# Dependencias (se instalan dentro de la imagen)
+node_modules/
+npm-debug.log
+
+# Entorno y secretos (nunca dentro de la imagen)
+.env
+.env.*
+!.env.example
+
+# Artefactos de CI/CD e infraestructura
+.github/
+*.md
+Dockerfile
+.dockerignore
+docker-compose.yml
