@@ -1,7 +1,7 @@
 # Backend - API REST con Node.js y Express
 
 ## Descripción
-Backend API desarrollado en JavaScript con Node.js y Express framework. Proporciona endpoints RESTful para la gestión de usuarios con conexión a base de datos MySQL.
+Backend API desarrollado en JavaScript con Node.js y Express framework. Proporciona endpoints RESTful para la gestión de usuarios con conexión a base de datos MySQL para Gestion.
 
 ## Versiones y Herramientas Requeridas
 
