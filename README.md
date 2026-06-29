@@ -103,3 +103,5 @@ backend/
 ## Despliegue DevOps (EFT)
 
 CI/CD con GitHub Actions + despliegue en AWS ECS Fargate. Ver [ARQUITECTURA.md](ARQUITECTURA.md) para el detalle de contenerización, pipeline, infraestructura y diagrama.
+
+<!-- verificacion runner para demo en vivo -->
